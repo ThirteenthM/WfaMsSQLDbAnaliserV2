@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WfaMsSQLDbAnaliserV2", "WfaMsSQLDbAnaliserV2\WfaMsSQLDbAnaliserV2.csproj", "{567580FE-9BC8-4CC6-82F2-016F7AA4C945}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2F03BA0E-3F7E-4C24-96AC-D0E60B0345A6} = {2F03BA0E-3F7E-4C24-96AC-D0E60B0345A6}
+		{67EBA6DB-6411-4E1A-94B2-88CD05AEFB62} = {67EBA6DB-6411-4E1A-94B2-88CD05AEFB62}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arm.Plugin.Type", "Arm.Plugin.Type\Arm.Plugin.Type.csproj", "{67EBA6DB-6411-4E1A-94B2-88CD05AEFB62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arm.Plugin.SQLDbAnaliser", "Arm.Plugins\Arm.Plugin.SqlDbAnaliser\Arm.Plugin.SQLDbAnaliser.csproj", "{2F03BA0E-3F7E-4C24-96AC-D0E60B0345A6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{67EBA6DB-6411-4E1A-94B2-88CD05AEFB62} = {67EBA6DB-6411-4E1A-94B2-88CD05AEFB62}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{567580FE-9BC8-4CC6-82F2-016F7AA4C945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567580FE-9BC8-4CC6-82F2-016F7AA4C945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567580FE-9BC8-4CC6-82F2-016F7AA4C945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567580FE-9BC8-4CC6-82F2-016F7AA4C945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67EBA6DB-6411-4E1A-94B2-88CD05AEFB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67EBA6DB-6411-4E1A-94B2-88CD05AEFB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67EBA6DB-6411-4E1A-94B2-88CD05AEFB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67EBA6DB-6411-4E1A-94B2-88CD05AEFB62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F03BA0E-3F7E-4C24-96AC-D0E60B0345A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F03BA0E-3F7E-4C24-96AC-D0E60B0345A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F03BA0E-3F7E-4C24-96AC-D0E60B0345A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F03BA0E-3F7E-4C24-96AC-D0E60B0345A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03FBC1A7-43AF-4F69-976F-3F8B959536BF}
+	EndGlobalSection
+EndGlobal

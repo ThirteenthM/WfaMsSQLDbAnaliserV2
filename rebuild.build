@@ -1,0 +1,135 @@
+﻿<?xml version="1.0"?>
+<project name="WfaMsSQLDbAnaliserV2 Build" default="all">
+
+	<property name="build.outDir" value=".build" />
+	<property name="compile.currentSolution" value="WfaMsSQLDbAnaliserV2"/>
+	<property name="compile.targets" value="Build" />
+	<property name="compile.verbosity" value="minimal" />
+    
+    <property name="compile.msbuild" value="msbuild.exe" />
+    <property name="compile.platformTarget" value="${property::get-value('COMPILE_PLATFORM_TARGET')}" />
+    <property name="compile.confing" value="${property::get-value('BUILD_CONFIG')}"/>
+	
+	<target name="compile">
+		<trycatch>
+			<try>
+				<echo message="${compile.currentSolution}" />
+				<exec program="${compile.msbuild}">
+					<arg value="${compile.currentSolution}"/>
+					<arg value="/t:${compile.targets}"/>
+					<arg value="/v:${compile.verbosity}"/>
+					<arg value="/nologo"/>
+					<arg line="/p:PlatformTarget=${compile.platformTarget} " />
+					<arg line="/p:BuildInParallel=true " />
+					<arg line="/p:Configuration=${compile.confing}" />
+				</exec>
+			</try>
+			<catch>
+				<fail message="!!! Сборка прервана" />
+			</catch>
+		</trycatch>
+	</target>
+
+    <target name="exec.sql.script">
+		<trycatch>
+			<try>
+				<echo message="${DB_SCRIPT}" />	
+				<exec program="sqlcmd" >
+					<arg line="-S ${DB_SERVER}" />
+					<arg line="-d ${DB_SOURCE}"/>
+					<arg value="-E" if="${property::get-value('DB_USER')==''}" />
+					<arg line="-U ${DB_USER}" if="${property::get-value('DB_USER')!=''}" />
+					<arg line="-P ${DB_PASS}" if="${property::get-value('DB_PASS')!=''}" />
+					<arg line="-l 60"/>
+					<arg line="-i &quot;${DB_SCRIPT}&quot;"/>
+					<arg value="-b"/>
+					<arg value="-W"/>
+					<arg value="-h-1"/>
+					<arg value="-I"/>
+				</exec>
+			</try>
+			<catch>
+                <fail message="!!! Выполнение скрипта прервано" />
+			</catch>
+		</trycatch>
+	</target>
+
+
+    <target name="DB.Update">
+ 		
+        <property name="DB_SCRIPT_DIR" value="${directory::get-current-directory()}\SQL\" />            
+
+        <property name="DB_SCRIPT" value="${DB_SCRIPT_DIR}\#Update_script\1_Structure.sql" />
+		<call target="exec.sql.script" />
+            
+
+        <foreach item="File" property="DB_SCRIPT">
+			<in>
+				<items basedir="${DB_SCRIPT_DIR}">
+					<include name="*.sql" />	
+				</items>
+			</in>
+			<do>
+				<call target="exec.sql.script" />
+			</do>
+		</foreach>
+
+        
+        <foreach item="File" property="DB_SCRIPT">
+			<in>
+				<items basedir="${DB_SCRIPT_DIR}">
+					<include name="**\*.sql" />	
+					<exclude name="*.sql" />
+					<exclude name="#Update_script\**\*" />
+					<exclude name="!Trash\**\*" />
+				</items>
+			</in>
+			<do>
+				<call target="exec.sql.script" />
+			</do>
+		</foreach>               
+            
+            
+        <property name="DB_SCRIPT" value="${DB_SCRIPT_DIR}\#Update_script\UpdateDataScripts.sql" />
+		<call target="exec.sql.script" />
+            
+	</target>
+
+
+	<target name="PreCompilePrepare">
+		<delete dir="${build.outDir}"/>
+		<mkdir dir="${build.outDir}"/>
+        <mkdir dir="${build.outDir}\Plugin"/>
+	</target>
+
+
+	<target name="build.WfaMsSQLDbAnaliserV2">
+		<property name="compile.currentSolution" value="WfaMsSQLDbAnaliserV2.sln"/>
+		<call target="compile" />
+	</target>
+    
+    
+	<target name="PostCompilePrepare">
+		<copy todir="${build.outDir}">
+			<fileset basedir="WfaMsSQLDbAnaliserV2\bin\${compile.confing}\">
+				<include name="WfaMsSQLDbAnaliserV2.exe" />
+				<include name="WfaMsSQLDbAnaliserV2.config" />
+			</fileset>
+		</copy>
+        
+        
+        <copy todir="${build.outDir}">
+			<fileset basedir="Dlls\">
+				<include name="*.dll" />
+			</fileset>
+		</copy>
+	</target>
+
+
+	<target name="all">
+		<call target="PreCompilePrepare" />
+		<call target="build.WfaMsSQLDbAnaliserV2" />
+		<call target="PostCompilePrepare" />
+	</target>
+
+</project>	
