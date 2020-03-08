@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
-<project name="WfaMsSQLDbAnaliserV2 Build" default="all">
+	<project name="WfaMsSQLDbAnaliserV2 Build" default="all">
 
 	<property name="build.outDir" value=".build" />
 	<property name="compile.currentSolution" value="WfaMsSQLDbAnaliserV2"/>
