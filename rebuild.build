@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0"?>
-	<project name="WfaMsSQLDbAnaliserV2 Build" default="all">
-
+<project name="WfaMsSQLDbAnaliserV2 Build" default="all">
 	<property name="build.outDir" value=".build" />
 	<property name="compile.currentSolution" value="WfaMsSQLDbAnaliserV2"/>
 	<property name="compile.targets" value="Build" />
@@ -10,6 +9,24 @@
     <property name="compile.platformTarget" value="${property::get-value('COMPILE_PLATFORM_TARGET')}" />
     <property name="compile.confing" value="${property::get-value('BUILD_CONFIG')}"/>
 	
+	
+	<target name="Build.Clear">
+		<delete dir="${build.outDir}"/>
+		<delete>
+			<fileset>
+				<include name="WfaMsSQLDbAnaliserV2/**/bin/" />
+				<include name="WfaMsSQLDbAnaliserV2/**/obj/" />
+
+				<include name="Arm.Plugin.Type/**/bin/" />
+				<include name="Arm.Plugin.Type/**/obj/" />
+
+				<include name="Arm.Plugins/**/bin/" />
+				<include name="Arm.Plugins/**/obj/" />
+
+			</fileset>
+		</delete>
+	</target>
+	
 	<target name="compile">
 		<trycatch>
 			<try>
@@ -17,6 +34,7 @@
 				<exec program="${compile.msbuild}">
 					<arg value="${compile.currentSolution}"/>
 					<arg value="/t:${compile.targets}"/>
+					<arg value="/v:${compile.verbosity}"/>
 					<arg value="/v:${compile.verbosity}"/>
 					<arg value="/nologo"/>
 					<arg line="/p:PlatformTarget=${compile.platformTarget} " />
@@ -53,7 +71,6 @@
 			</catch>
 		</trycatch>
 	</target>
-
 
     <target name="DB.Update">
  		
@@ -95,19 +112,16 @@
             
 	</target>
 
-
 	<target name="PreCompilePrepare">
 		<delete dir="${build.outDir}"/>
 		<mkdir dir="${build.outDir}"/>
-        <mkdir dir="${build.outDir}\Plugin"/>
+        <mkdir dir="${build.outDir}\Plugins"/>
 	</target>
-
 
 	<target name="build.WfaMsSQLDbAnaliserV2">
 		<property name="compile.currentSolution" value="WfaMsSQLDbAnaliserV2.sln"/>
 		<call target="compile" />
 	</target>
-    
     
 	<target name="PostCompilePrepare">
 		<copy todir="${build.outDir}">
@@ -125,8 +139,8 @@
 		</copy>
 	</target>
 
-
 	<target name="all">
+		<call target="Build.Clear" />
 		<call target="PreCompilePrepare" />
 		<call target="build.WfaMsSQLDbAnaliserV2" />
 		<call target="PostCompilePrepare" />
