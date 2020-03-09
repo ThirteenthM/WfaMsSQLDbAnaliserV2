@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Arm.Plugin.Type\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Classes\SetupAplication.cs" />
     <Compile Include="Classes\SetupPluginForm.cs" />
     <Compile Include="MdiMainForm.cs">
@@ -63,7 +66,6 @@
     </Compile>
     <Compile Include="MdiMainFormController.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MdiMainForm.resx">
       <DependentUpon>MdiMainForm.cs</DependentUpon>
     </EmbeddedResource>
